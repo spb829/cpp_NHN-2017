@@ -47,18 +47,30 @@ bool sortPerson(Person p1, Person p2){
     if (p2.info.size() == 3)
         p2c = p2.info[2];
     
-    for (int i = 0; i < n; i++){
+    // According to Priority order
+    for (int i = 0; i < n; i++)
         switch (priority[i]) {
+                
                 // Codition 1
+                // Female > Male
             case 1:
-                if (p1.info[0] != p2.info[1]){
-                    if (p1.info[0] == "F")
-                        return true;
-                    else
-                        return false;
-                }
+                // if Person1 == Person2
+                if (p1.info[0] == p2.info[1])
+                    // Skip this condition
+                    break;
+                
+                // if Person1 is Female
+                if (p1.info[0] == "F")
+                    return true;
+                else
+                    return false;
+                
                 break;
+                
                 // Condition 2
+                // Child > Adult
+                // Child : Younger > Older
+                // Adult : Older > Younger
             case 2:
                 // Person1 is a Child
                 if (p1a <= 7){
@@ -73,14 +85,19 @@ bool sortPerson(Person p1, Person p2){
                     return false;
                 
                 // Both aren't Children
+                // And they are not same age
                 if (p1a != p2a)
                     return p1a > p2a;
                 break;
+                
                 // Condition 3
+                // PW > DP > P
             case 3:
+                // if Person1 == Person2
                 if (p1c == p2c)
+                    // Skip this condition
                     break;
-                // PW DP P
+                
                 if (p1c == "PW"){
                     return true;
                 } else if (p1c == "DP") {
@@ -94,15 +111,18 @@ bool sortPerson(Person p1, Person p2){
                 }
                 return false;
                 break;
+                
             default:
                 break;
         }
-    }
+    
     return true;
 }
 
 void sortPeople(){
+    // Sort People == (Vector of Persons)
     sort(people.begin(),people.end(), [](const Person& p1, const Person& p2){
+        // Figure out which is prior
         return sortPerson(p1, p2);
     });
 }
@@ -127,7 +147,8 @@ void inputData(){
         
         inputs.push_back(vector<inputType>(istream_iterator<inputType>(iss), istream_iterator<inputType>()));
     }
-    
+ 
+    // Init People (Copy inputs)
     for (int i = 0; i < n; i++){
         Person p = Person();
         for (auto it = inputs[i].begin(); it != inputs[i].end(); ++it)
@@ -138,8 +159,10 @@ void inputData(){
 }
 
 void solution(){
+    // Sort
     sortPeople();
     
+    // Print out
     for (auto i = people.begin(); i != people.end(); ++i){
         cout << *i << endl;
     }
@@ -147,6 +170,7 @@ void solution(){
 }
 
 void printData(){
+    // print data for test
     int a = 0;
     cout << endl << "data :" << endl;
     for (auto i = people.begin(); i != people.end(); ++i){
