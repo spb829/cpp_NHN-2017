@@ -61,23 +61,22 @@ int findIndexOfTile(Tile t){
 
 void solution(){
     for (int i = 0; i < n; i++){
-        //cout << i << " : " << endl;
         for (int j = 0; j < n; j++){
-            //cout << inputs[i][j] << "\t";
             char c = inputs[i][j];
+            
+            // if j > 0 then put a space
             if (j)
                 cout << " ";
+            // if '0' then print -1 and skip
             if (c == '0'){
                 cout << "-1";
                 continue;
             }
             
-            bool top = false;
-            bool right = false;
-            bool bottom = false;
-            bool left = false;
+            // Init bool to create Tile
+            bool top = false, right = false, bottom = false, left = false;
             
-            // 첫번째 행이 아니고 위 행이 같은 그룹이면..
+            // if there is an adjacent tile exists (top, left, bottom, right direction)
             if (i && inputs[i-1][j] == c)
                 top = true;
             if (j && inputs[i][j-1] == c)
@@ -87,10 +86,14 @@ void solution(){
             if (j < n-1 && inputs[i][j+1] == c)
                 right = true;
             
+            // Create tile that it needs
             Tile need = Tile(top, right, bottom, left);
             
+            // Then find out the index of tile that it needs
+            // also adds up the computed number using character inputed and 'A'
             int value = findIndexOfTile(need) + (c - 'A') * 16;
             
+            // put a space if value only has 1 length
             if (to_string(value).length() == 1)
                 cout << " ";
             
@@ -114,8 +117,6 @@ void inputData(){
         
         inputs.push_back(vector<char>(istream_iterator<char>(iss), istream_iterator<char>()));
     }
-    
-    
 }
 
 void printData(){
@@ -132,7 +133,6 @@ void printData(){
 
 int main(int argc, const char * argv[]) {
     inputData();
-    
     solution();
     return 0;
 }
